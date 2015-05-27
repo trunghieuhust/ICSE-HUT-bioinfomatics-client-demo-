@@ -20,10 +20,8 @@ public class MainWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Properties prop;
 
-	public MainWindow(Properties prop) {
-		this.prop = prop;
+	public MainWindow() {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -42,7 +40,7 @@ public class MainWindow extends JFrame {
 
 		setMenu();
 
-		contentPane = new MainPane(prop);
+		contentPane = new MainPane();
 		setContentPane(contentPane);
 	}
 
@@ -65,9 +63,5 @@ public class MainWindow extends JFrame {
 			}
 		});
 		mnMain.add(mntmQuit);
-	}
-
-	public Properties getUserPass() {
-		return prop;
 	}
 }

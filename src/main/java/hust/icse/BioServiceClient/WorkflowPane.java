@@ -36,12 +36,10 @@ public class WorkflowPane extends JPanel implements ActionListener,
 	private JEditorPane resultPane;
 	private JEditorPane xmlEditor;
 	private JButton btnSubmit;
-	private Properties prop;
 	private Bio bio;
 	private final static String TEST = "<workflow name='2step'><activities><activity name='aligment'><task name='clustal1'><tool-alias>clustal</tool-alias><input-files input='input'></input-files><output-files output='output1'></output-files></task><task name='clustal2'><tool-alias>clustalo2</tool-alias><input-files input='input'></input-files><output-files output='output2'></output-files></task></activity><activity name='fasttree'><task name='fasttree'><tool-alias>fasttree</tool-alias><input-files input='output2'></input-files><output-files output='output-fasttree'></output-files></task></activity></activities></workflow><tools><tool><alias>clustal</alias><name>clustalo</name><version>1.2.1</version><package>clustalo</package><execute command='--infile=$input --outfile=$output -v'></execute></tool><tool><alias>clustalo2</alias><name>clustalo</name><version>1.2.1</version><package>clustalo</package><execute command='--infile=$input --outfile=$output --outfmt=clustal -v'></execute></tool><tool><alias>fasttree</alias><name>fasttree</name><version>2.1</version><package>fasttree</package><execute command='$input > $output'></execute></tool></tools>";
 
-	public WorkflowPane(Properties prop) {
-		this.prop = prop;
+	public WorkflowPane() {
 		bio = new BioServiceImplService().getBioServiceImplPort();
 
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -113,9 +111,8 @@ public class WorkflowPane extends JPanel implements ActionListener,
 				sb.append("  .ID: " + taskStatus.getID());
 				sb.append("\n\t\tTask status: " + taskStatus.getStatus());
 				if (taskStatus.getStatusCode() == 2) {
-					TaskResult result = bio.getResult(
-							prop.getProperty("username"),
-							prop.getProperty("password"), taskStatus.getID());
+					TaskResult result = bio.getResult(Main.getUsername(),
+							Main.getPassword(), taskStatus.getID());
 					sb.append("\n\t\tOutput console: "
 							+ result.getOutputConsole());
 					sb.append("\n\t\tOutput file: " + result.getOutputFile());
@@ -133,8 +130,8 @@ public class WorkflowPane extends JPanel implements ActionListener,
 			xmlEditor.setEditable(false);
 			String workflow = xmlEditor.getText();
 			System.out.println(workflow);
-			String ID = bio.createWorkflow(prop.getProperty("username"),
-					prop.getProperty("password"), workflow);
+			String ID = bio.createWorkflow(Main.getUsername(),
+					Main.getPassword(), workflow);
 			Status status = null;
 			while (status == null || status.getStatusCode() != 2) {
 				status = bio.getStatus(ID);

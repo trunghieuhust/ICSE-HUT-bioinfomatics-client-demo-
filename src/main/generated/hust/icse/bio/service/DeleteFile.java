@@ -7,18 +7,19 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for uploadData complex type.
+ * <p>Java class for deleteFile complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="uploadData"&gt;
+ * &lt;complexType name="deleteFile"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="uploadFile" type="{http://service.bio.icse.hust/}fileUploader" minOccurs="0"/&gt;
+ *         &lt;element name="containerName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="filename" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -28,16 +29,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "uploadData", propOrder = {
+@XmlType(name = "deleteFile", propOrder = {
     "username",
     "password",
-    "uploadFile"
+    "containerName",
+    "filename"
 })
-public class UploadData {
+public class DeleteFile {
 
     protected String username;
     protected String password;
-    protected FileUploader uploadFile;
+    protected String containerName;
+    protected String filename;
 
     /**
      * Gets the value of the username property.
@@ -88,27 +91,51 @@ public class UploadData {
     }
 
     /**
-     * Gets the value of the uploadFile property.
+     * Gets the value of the containerName property.
      * 
      * @return
      *     possible object is
-     *     {@link FileUploader }
+     *     {@link String }
      *     
      */
-    public FileUploader getUploadFile() {
-        return uploadFile;
+    public String getContainerName() {
+        return containerName;
     }
 
     /**
-     * Sets the value of the uploadFile property.
+     * Sets the value of the containerName property.
      * 
      * @param value
      *     allowed object is
-     *     {@link FileUploader }
+     *     {@link String }
      *     
      */
-    public void setUploadFile(FileUploader value) {
-        this.uploadFile = value;
+    public void setContainerName(String value) {
+        this.containerName = value;
+    }
+
+    /**
+     * Gets the value of the filename property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFilename() {
+        return filename;
+    }
+
+    /**
+     * Sets the value of the filename property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFilename(String value) {
+        this.filename = value;
     }
 
 }

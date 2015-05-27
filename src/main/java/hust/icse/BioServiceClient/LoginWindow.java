@@ -11,7 +11,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -88,10 +87,9 @@ public class LoginWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (login(username.getValue(), password.getValue())) {
-					Properties prop = new Properties();
-					prop.put("username", username.getValue());
-					prop.put("password", password.getValue());
-					JFrame mainWindow = new MainWindow(prop);
+					Main.setUsername(username.getValue());
+					Main.setPassword(password.getValue());
+					JFrame mainWindow = new MainWindow();
 					mainWindow.setVisible(true);
 					close();
 				} else {
@@ -119,14 +117,6 @@ public class LoginWindow extends JFrame {
 	private boolean login(String username, String password) {
 		Bio bio = new BioServiceImplService().getBioServiceImplPort();
 		return bio.authenticate(username, password);
-	}
-
-	public static String getUsername() {
-		return username.getValue();
-	}
-
-	public static String getPassword() {
-		return password.getValue();
 	}
 
 	private void showLoginFailedDialog() {

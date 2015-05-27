@@ -28,6 +28,14 @@ public class ObjectFactory {
     private final static QName _AuthenticateResponse_QNAME = new QName("http://service.bio.icse.hust/", "authenticateResponse");
     private final static QName _CreateWorkflow_QNAME = new QName("http://service.bio.icse.hust/", "createWorkflow");
     private final static QName _CreateWorkflowResponse_QNAME = new QName("http://service.bio.icse.hust/", "createWorkflowResponse");
+    private final static QName _DeleteContainer_QNAME = new QName("http://service.bio.icse.hust/", "deleteContainer");
+    private final static QName _DeleteContainerResponse_QNAME = new QName("http://service.bio.icse.hust/", "deleteContainerResponse");
+    private final static QName _DeleteFile_QNAME = new QName("http://service.bio.icse.hust/", "deleteFile");
+    private final static QName _DeleteFileResponse_QNAME = new QName("http://service.bio.icse.hust/", "deleteFileResponse");
+    private final static QName _GetAllContainer_QNAME = new QName("http://service.bio.icse.hust/", "getAllContainer");
+    private final static QName _GetAllContainerResponse_QNAME = new QName("http://service.bio.icse.hust/", "getAllContainerResponse");
+    private final static QName _GetAllFileInContainer_QNAME = new QName("http://service.bio.icse.hust/", "getAllFileInContainer");
+    private final static QName _GetAllFileInContainerResponse_QNAME = new QName("http://service.bio.icse.hust/", "getAllFileInContainerResponse");
     private final static QName _GetResult_QNAME = new QName("http://service.bio.icse.hust/", "getResult");
     private final static QName _GetResultResponse_QNAME = new QName("http://service.bio.icse.hust/", "getResultResponse");
     private final static QName _GetStatus_QNAME = new QName("http://service.bio.icse.hust/", "getStatus");
@@ -72,6 +80,70 @@ public class ObjectFactory {
      */
     public CreateWorkflowResponse createCreateWorkflowResponse() {
         return new CreateWorkflowResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteContainer }
+     * 
+     */
+    public DeleteContainer createDeleteContainer() {
+        return new DeleteContainer();
+    }
+
+    /**
+     * Create an instance of {@link DeleteContainerResponse }
+     * 
+     */
+    public DeleteContainerResponse createDeleteContainerResponse() {
+        return new DeleteContainerResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteFile }
+     * 
+     */
+    public DeleteFile createDeleteFile() {
+        return new DeleteFile();
+    }
+
+    /**
+     * Create an instance of {@link DeleteFileResponse }
+     * 
+     */
+    public DeleteFileResponse createDeleteFileResponse() {
+        return new DeleteFileResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAllContainer }
+     * 
+     */
+    public GetAllContainer createGetAllContainer() {
+        return new GetAllContainer();
+    }
+
+    /**
+     * Create an instance of {@link GetAllContainerResponse }
+     * 
+     */
+    public GetAllContainerResponse createGetAllContainerResponse() {
+        return new GetAllContainerResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAllFileInContainer }
+     * 
+     */
+    public GetAllFileInContainer createGetAllFileInContainer() {
+        return new GetAllFileInContainer();
+    }
+
+    /**
+     * Create an instance of {@link GetAllFileInContainerResponse }
+     * 
+     */
+    public GetAllFileInContainerResponse createGetAllFileInContainerResponse() {
+        return new GetAllFileInContainerResponse();
     }
 
     /**
@@ -196,6 +268,78 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "createWorkflowResponse")
     public JAXBElement<CreateWorkflowResponse> createCreateWorkflowResponse(CreateWorkflowResponse value) {
         return new JAXBElement<CreateWorkflowResponse>(_CreateWorkflowResponse_QNAME, CreateWorkflowResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteContainer }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "deleteContainer")
+    public JAXBElement<DeleteContainer> createDeleteContainer(DeleteContainer value) {
+        return new JAXBElement<DeleteContainer>(_DeleteContainer_QNAME, DeleteContainer.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteContainerResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "deleteContainerResponse")
+    public JAXBElement<DeleteContainerResponse> createDeleteContainerResponse(DeleteContainerResponse value) {
+        return new JAXBElement<DeleteContainerResponse>(_DeleteContainerResponse_QNAME, DeleteContainerResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteFile }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "deleteFile")
+    public JAXBElement<DeleteFile> createDeleteFile(DeleteFile value) {
+        return new JAXBElement<DeleteFile>(_DeleteFile_QNAME, DeleteFile.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteFileResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "deleteFileResponse")
+    public JAXBElement<DeleteFileResponse> createDeleteFileResponse(DeleteFileResponse value) {
+        return new JAXBElement<DeleteFileResponse>(_DeleteFileResponse_QNAME, DeleteFileResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllContainer }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "getAllContainer")
+    public JAXBElement<GetAllContainer> createGetAllContainer(GetAllContainer value) {
+        return new JAXBElement<GetAllContainer>(_GetAllContainer_QNAME, GetAllContainer.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllContainerResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "getAllContainerResponse")
+    public JAXBElement<GetAllContainerResponse> createGetAllContainerResponse(GetAllContainerResponse value) {
+        return new JAXBElement<GetAllContainerResponse>(_GetAllContainerResponse_QNAME, GetAllContainerResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllFileInContainer }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "getAllFileInContainer")
+    public JAXBElement<GetAllFileInContainer> createGetAllFileInContainer(GetAllFileInContainer value) {
+        return new JAXBElement<GetAllFileInContainer>(_GetAllFileInContainer_QNAME, GetAllFileInContainer.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllFileInContainerResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "getAllFileInContainerResponse")
+    public JAXBElement<GetAllFileInContainerResponse> createGetAllFileInContainerResponse(GetAllFileInContainerResponse value) {
+        return new JAXBElement<GetAllFileInContainerResponse>(_GetAllFileInContainerResponse_QNAME, GetAllFileInContainerResponse.class, null, value);
     }
 
     /**

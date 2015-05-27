@@ -9,7 +9,11 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.commons.io.FileUtils;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -57,6 +61,18 @@ public class SelectTablePane extends JPanel {
 		jtable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtable.setRowSelectionAllowed(true);
 		jtable.setColumnSelectionAllowed(false);
+		jtable.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+						if ((boolean) model.getValueAt(e.getFirstIndex(), 2) == true) {
+							updateStatus(e.getFirstIndex(), "Skip");
+						} else {
+							updateStatus(e.getFirstIndex(), "Ready");
+						}
+					}
+				});
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "1, 1, fill, fill");
 		scrollPane.setViewportView(jtable);
@@ -65,13 +81,14 @@ public class SelectTablePane extends JPanel {
 	public void setFileList(File[] fileList) {
 		this.fileList = fileList;
 		isUpload = new boolean[this.fileList.length];
-		model.getDataVector().removeAllElements();
+		clearList();
 		this.fileListName = new String[this.fileList.length];
 		for (int i = 0; i < fileList.length; i++) {
 			isUpload[i] = true;
 			fileListName[i] = fileList[i].getName();
-			model.addRow(new Object[] { fileList[i].getName(), isUpload[i],
-					"Ready" });
+			model.addRow(new Object[] { fileList[i].getName(),
+					FileUtils.byteCountToDisplaySize(fileList[i].length()),
+					isUpload[i], "Ready" });
 		}
 		if (fileList.length < DEFAULT_ROW) {
 			model.setRowCount(DEFAULT_ROW);
@@ -85,8 +102,16 @@ public class SelectTablePane extends JPanel {
 		jtable.setEnabled(enabled);
 	}
 
-	public boolean[] getChosenFile() {
-		return isUpload;
+	public boolean isUpload(int index) {
+		return (boolean) model.getValueAt(index, 2);
+	}
+
+	public void clearList() {
+		model.getDataVector().removeAllElements();
+	}
+
+	public void insertRow(Object[] row) {
+		model.addRow(row);
 	}
 
 	public void updateStatus(int row, String status) {
@@ -96,5 +121,17 @@ public class SelectTablePane extends JPanel {
 
 	public File[] getFileList() {
 		return fileList;
+	}
+
+	public int getRowCount() {
+		return model.getRowCount();
+	}
+
+	public boolean isSelect(int index) {
+		return (boolean) model.getValueAt(index, 2);
+	}
+
+	public String getFilename(int index) {
+		return (String) model.getValueAt(index, 0);
 	}
 }

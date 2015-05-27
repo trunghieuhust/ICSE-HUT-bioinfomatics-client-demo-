@@ -15,7 +15,7 @@ public class MainPane extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Properties prop;
 
-	public MainPane(Properties prop) {
+	public MainPane() {
 		setLayout(new FormLayout(
 				new ColumnSpec[] { ColumnSpec.decode("38px:grow"), },
 				new RowSpec[] { RowSpec.decode("7px:grow"),
@@ -24,7 +24,7 @@ public class MainPane extends JPanel {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 		add(tabbedPane, "1, 1, fill, fill");
 
-		WorkflowPane workflowPane = new WorkflowPane(prop);
+		WorkflowPane workflowPane = new WorkflowPane();
 		tabbedPane.addTab("Workflow", null, workflowPane, "Workflow");
 		
 		DataPane dataPane = new DataPane();
