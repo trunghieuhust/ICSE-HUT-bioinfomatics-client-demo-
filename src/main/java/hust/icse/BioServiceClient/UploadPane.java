@@ -5,7 +5,6 @@ import hust.icse.bio.service.FileUploader;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.List;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -14,8 +13,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
-
-import org.apache.commons.io.FileUtils;
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -29,7 +26,6 @@ public class UploadPane extends JPanel {
 	private SelectTablePane selectTable;
 	private JButton chooseFile;
 	private JButton uploadbtn;
-	private int uploadRemain;
 
 	public UploadPane() {
 		setupUI();
@@ -107,14 +103,9 @@ public class UploadPane extends JPanel {
 					fileUploader.setName(fileList[i].getName());
 					System.out.println(fileList[i].getName());
 					selectTable.updateStatus(i, "Uploading");
-					long sentByte = Main.getBio().uploadData(
-							Main.getUsername(), Main.getPassword(),
-							fileUploader);
-					selectTable.updateStatus(
-							i,
-							"Uploaded "
-									+ FileUtils
-											.byteCountToDisplaySize(sentByte));
+					Main.getBio().uploadData(Main.getUsername(),
+							Main.getPassword(), fileUploader);
+					selectTable.updateStatus(i, "Uploaded ");
 
 				} else {
 					System.out.println("skip " + fileList[i].getName());

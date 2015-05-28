@@ -36,10 +36,14 @@ public class ObjectFactory {
     private final static QName _GetAllContainerResponse_QNAME = new QName("http://service.bio.icse.hust/", "getAllContainerResponse");
     private final static QName _GetAllFileInContainer_QNAME = new QName("http://service.bio.icse.hust/", "getAllFileInContainer");
     private final static QName _GetAllFileInContainerResponse_QNAME = new QName("http://service.bio.icse.hust/", "getAllFileInContainerResponse");
+    private final static QName _GetLinkFile_QNAME = new QName("http://service.bio.icse.hust/", "getLinkFile");
+    private final static QName _GetLinkFileResponse_QNAME = new QName("http://service.bio.icse.hust/", "getLinkFileResponse");
     private final static QName _GetResult_QNAME = new QName("http://service.bio.icse.hust/", "getResult");
     private final static QName _GetResultResponse_QNAME = new QName("http://service.bio.icse.hust/", "getResultResponse");
     private final static QName _GetStatus_QNAME = new QName("http://service.bio.icse.hust/", "getStatus");
     private final static QName _GetStatusResponse_QNAME = new QName("http://service.bio.icse.hust/", "getStatusResponse");
+    private final static QName _SignUp_QNAME = new QName("http://service.bio.icse.hust/", "signUp");
+    private final static QName _SignUpResponse_QNAME = new QName("http://service.bio.icse.hust/", "signUpResponse");
     private final static QName _UploadData_QNAME = new QName("http://service.bio.icse.hust/", "uploadData");
     private final static QName _UploadDataResponse_QNAME = new QName("http://service.bio.icse.hust/", "uploadDataResponse");
 
@@ -147,6 +151,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetLinkFile }
+     * 
+     */
+    public GetLinkFile createGetLinkFile() {
+        return new GetLinkFile();
+    }
+
+    /**
+     * Create an instance of {@link GetLinkFileResponse }
+     * 
+     */
+    public GetLinkFileResponse createGetLinkFileResponse() {
+        return new GetLinkFileResponse();
+    }
+
+    /**
      * Create an instance of {@link GetResult }
      * 
      */
@@ -176,6 +196,22 @@ public class ObjectFactory {
      */
     public GetStatusResponse createGetStatusResponse() {
         return new GetStatusResponse();
+    }
+
+    /**
+     * Create an instance of {@link SignUp }
+     * 
+     */
+    public SignUp createSignUp() {
+        return new SignUp();
+    }
+
+    /**
+     * Create an instance of {@link SignUpResponse }
+     * 
+     */
+    public SignUpResponse createSignUpResponse() {
+        return new SignUpResponse();
     }
 
     /**
@@ -343,6 +379,24 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetLinkFile }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "getLinkFile")
+    public JAXBElement<GetLinkFile> createGetLinkFile(GetLinkFile value) {
+        return new JAXBElement<GetLinkFile>(_GetLinkFile_QNAME, GetLinkFile.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetLinkFileResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "getLinkFileResponse")
+    public JAXBElement<GetLinkFileResponse> createGetLinkFileResponse(GetLinkFileResponse value) {
+        return new JAXBElement<GetLinkFileResponse>(_GetLinkFileResponse_QNAME, GetLinkFileResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetResult }{@code >}}
      * 
      */
@@ -376,6 +430,24 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "getStatusResponse")
     public JAXBElement<GetStatusResponse> createGetStatusResponse(GetStatusResponse value) {
         return new JAXBElement<GetStatusResponse>(_GetStatusResponse_QNAME, GetStatusResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SignUp }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "signUp")
+    public JAXBElement<SignUp> createSignUp(SignUp value) {
+        return new JAXBElement<SignUp>(_SignUp_QNAME, SignUp.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SignUpResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "signUpResponse")
+    public JAXBElement<SignUpResponse> createSignUpResponse(SignUpResponse value) {
+        return new JAXBElement<SignUpResponse>(_SignUpResponse_QNAME, SignUpResponse.class, null, value);
     }
 
     /**

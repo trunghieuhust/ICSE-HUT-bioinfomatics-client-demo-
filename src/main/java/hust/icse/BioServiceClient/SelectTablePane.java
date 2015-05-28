@@ -90,7 +90,11 @@ public class SelectTablePane extends JPanel {
 					FileUtils.byteCountToDisplaySize(fileList[i].length()),
 					isUpload[i], "Ready" });
 		}
-		if (fileList.length < DEFAULT_ROW) {
+		fillTable();
+	}
+
+	public void fillTable() {
+		if (model.getRowCount() < DEFAULT_ROW) {
 			model.setRowCount(DEFAULT_ROW);
 		}
 		model.fireTableDataChanged();

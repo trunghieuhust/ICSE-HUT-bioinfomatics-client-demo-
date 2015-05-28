@@ -17,12 +17,19 @@ public class Main {
 	private static String username;
 	private static String password;
 	private static Bio bio;
+	private static JFrame loginWindow;
 
 	public static void main(String[] args) {
 		bio = new BioServiceImplService().getBioServiceImplPort();
 		setMtomClientEnable();
-		JFrame loginWindow = new LoginWindow();
+		loginWindow = new LoginWindow();
 		loginWindow.setVisible(true);
+	}
+
+	public static void showLoginWindows() {
+		if (loginWindow != null) {
+			loginWindow.setVisible(true);
+		}
 	}
 
 	private static void setMtomClientEnable() {
@@ -32,7 +39,7 @@ public class Main {
 		Client cl = ClientProxy.getClient(Main.getBio());
 
 		HTTPConduit http = (HTTPConduit) cl.getConduit();
-		
+
 		HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
 		// one hour timeout
 		httpClientPolicy.setConnectionTimeout(1000 * 60 * 60 * 1);

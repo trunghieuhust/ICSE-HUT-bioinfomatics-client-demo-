@@ -2,7 +2,7 @@ package hust.icse.BioServiceClient;
 
 import hust.icse.bio.service.Bio;
 import hust.icse.bio.service.BioServiceImplService;
-import hust.icse.BioServiceClient.InputField;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -16,21 +16,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class LoginWindow extends JFrame {
+public class SignUpWindow extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 	private static final Dimension DEFAULT_LOGIN_SIZE = new Dimension(280, 200);
 	private FlowLayout fl;
 	private static InputField username;
 	private static InputField password;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public LoginWindow() {
+	public SignUpWindow() {
 		setUIBase();
 		addInputField();
 		addButton();
+//		addSignUpLink();
 	}
 
 	private void setUIBase() {
@@ -66,45 +64,34 @@ public class LoginWindow extends JFrame {
 
 	private void addInputField() {
 		// username
-		username = new InputField("User name", "ducdmk55");
+		username = new InputField("User name", "");
 		username.setMnemonic('u');
 		super.getContentPane().add(username);
 
 		// password
-		password = new InputField("Password", "ducdmk55@123", true);
+		password = new InputField("Password", "", true);
 		password.setMnemonic('p');
 		super.getContentPane().add(password);
 
 	}
 
 	private void addButton() {
-		JButton loginButton = new LoginButton(this);
-		super.getContentPane().add(loginButton);
-		super.getRootPane().setDefaultButton(loginButton);
-		loginButton.addActionListener(new ActionListener() {
+		JButton signUpButton = new JButton("Sign Up");
+		super.getContentPane().add(signUpButton);
+		super.getRootPane().setDefaultButton(signUpButton);
+		signUpButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (login(username.getValue(), password.getValue())) {
-					Main.setUsername(username.getValue());
-					Main.setPassword(password.getValue());
-					JFrame mainWindow = new MainWindow();
-					mainWindow.setVisible(true);
+				boolean result = Main.getBio().signUp(username.getValue(),
+						password.getValue());
+				if (result == true) {
+					showSignUpDialog("Sign up completed !");
+					Main.showLoginWindows();
 					close();
 				} else {
-					showLoginFailedDialog();
+					showSignUpDialog("Sign up failed !");
 				}
-			}
-		});
-		JButton signUpbutton = new JButton("Sign Up");
-		super.getContentPane().add(signUpbutton);
-		signUpbutton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				SignUpWindow signUpWindow = new SignUpWindow();
-				signUpWindow.setVisible(true);
-				setVisible(false);
 			}
 		});
 		JButton cancelButton = new JButton();
@@ -124,13 +111,9 @@ public class LoginWindow extends JFrame {
 		dispose();
 	}
 
-	private boolean login(String username, String password) {
-		Bio bio = new BioServiceImplService().getBioServiceImplPort();
-		return bio.authenticate(username, password);
+	private void showSignUpDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Sign Up",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	private void showLoginFailedDialog() {
-		JOptionPane.showMessageDialog(this, "Login failed", "Login",
-				JOptionPane.WARNING_MESSAGE);
-	}
 }

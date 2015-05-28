@@ -21,7 +21,7 @@ public class FileManagerPane extends JPanel {
 
 	private JButton refresh;
 	private JButton delete;
-
+	private JButton getLink;
 	private SelectTablePane selectTable;
 
 	// ▶▶▶▶▶▶▶
@@ -68,6 +68,15 @@ public class FileManagerPane extends JPanel {
 			}
 		});
 		add(delete, "2, 8, left, default");
+		getLink = new JButton("Get Link");
+		getLink.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				getLinkTask linkTask = new getLinkTask();
+				linkTask.execute();
+			}
+		});
 	}
 
 	private class RefreshTask extends SwingWorker<Void, Void> {
@@ -90,10 +99,14 @@ public class FileManagerPane extends JPanel {
 							true, "Ready" });
 				}
 			}
+			return null;
+		}
 
+		@Override
+		protected void done() {
+			selectTable.fillTable();
 			refresh.setEnabled(true);
 			delete.setEnabled(true);
-			return null;
 		}
 	}
 
@@ -110,8 +123,6 @@ public class FileManagerPane extends JPanel {
 				String name = selectTable.getFilename(i);
 				if (name.contains("▶")) {
 					if (selectTable.isSelect(i)) {
-						System.out.println("delete file" + name + " in "
-								+ currentContainer);
 						String filename = name.trim().replace("▶", "");
 						Main.getBio().deleteFile(Main.getUsername(),
 								Main.getPassword(), currentContainer, filename);
@@ -126,10 +137,46 @@ public class FileManagerPane extends JPanel {
 			}
 			refresh.setEnabled(true);
 			delete.setEnabled(true);
-			RefreshTask refreshTask = new RefreshTask();
-			refreshTask.execute();
 			return null;
 		}
 
+		@Override
+		protected void done() {
+			RefreshTask refreshTask = new RefreshTask();
+			refreshTask.execute();
+		}
+	}
+
+	private class getLinkTask extends SwingWorker<Void, Void> {
+
+		@Override
+		protected Void doInBackground() throws Exception {
+			refresh.setEnabled(false);
+			delete.setEnabled(false);
+			selectTable.setEnabled(false);
+			int rowCount = selectTable.getRowCount();
+			String currentContainer = null;
+			int currentContainerIndex = -1;
+			for (int i = 0; i < rowCount; i++) {
+				String name = selectTable.getFilename(i);
+				if (name.contains("▶")) {
+					if (selectTable.isSelect(i)) {
+						String filename = name.trim().replace("▶", "");
+						if (!selectTable.isSelect(currentContainerIndex)) {
+							Main.getBio().deleteFile(Main.getUsername(),
+									Main.getPassword(), currentContainer, filename);
+
+						}
+					}
+				} else {
+					currentContainer = name;
+					currentContainerIndex = i;
+					if (selectTable.isSelect(i)) {
+//						Strin
+					}
+				}
+			}
+			return null;
+		}
 	}
 }

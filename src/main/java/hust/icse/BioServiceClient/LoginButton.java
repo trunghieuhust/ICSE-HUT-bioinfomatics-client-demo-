@@ -12,7 +12,7 @@ public class LoginButton extends JButton {
 	private static final long serialVersionUID = 1L;
 
 	public LoginButton(LoginWindow loginWindow) {
-		super("Login");
+		super("Sign in");
 		this.loginWindow = loginWindow;
 		super.setMnemonic('l');
 	}

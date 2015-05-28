@@ -1,5 +1,5 @@
-/home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/UploadDataResponse.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/Bio.java
+/home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/UploadDataResponse.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/SubmitResponse.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/MainWindow.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/Login.java
@@ -12,10 +12,13 @@
 /home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/InputField.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/AuthenticateResponse.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/ActivityStatus.java
+/home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/SignUp.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/Authenticate.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/GetResultResponse.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/CreateWorkflow.java
+/home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/UploadPane.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/Status.java
+/home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/GetLinkFileResponse.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/DeleteFileResponse.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/GetAllFileInContainer.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/GetStatus.java
@@ -24,10 +27,13 @@
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/UploadData.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/DeleteContainer.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/MainPane.java
+/home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/GetLinkFile.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/ObjectFactory.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/WorkflowPane.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/Main.java
+/home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/SignUpWindow.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/LoginWindow.java
+/home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/FileManagerPane.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/CreateWorkflowResponse.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/Submit.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/GetAllIDResponse.java
@@ -40,3 +46,4 @@
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/TaskStatus.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/java/hust/icse/BioServiceClient/DataPane.java
 /home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/GetAllFileInContainerResponse.java
+/home/hieu/bio/workspace/BioServiceClient/src/main/generated/hust/icse/bio/service/SignUpResponse.java
