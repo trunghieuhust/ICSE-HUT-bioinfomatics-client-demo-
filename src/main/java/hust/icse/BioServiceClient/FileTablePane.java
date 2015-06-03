@@ -1,7 +1,11 @@
 package hust.icse.BioServiceClient;
 
+import hust.icse.bio.service.Container;
+import hust.icse.bio.service.File;
+
 import java.awt.Dimension;
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,18 +23,16 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class SelectTablePane extends JPanel {
+public class FileTablePane extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private File[] fileList = null;
-	private String[] fileListName = null;
-	private boolean[] isUpload = null;
+	private List<Container> containterList;
 	private DefaultTableModel model;
 	private String[] columnName = { "Filename", "Size", "Select", "Status" };
 	private static final int DEFAULT_ROW = 20;
 	private JTable jtable;
 
-	public SelectTablePane() {
+	public FileTablePane() {
 		setLayout(new FormLayout(
 				new ColumnSpec[] { ColumnSpec.decode("400px:grow"), },
 				new RowSpec[] { RowSpec.decode("default:grow"), }));
@@ -65,6 +67,7 @@ public class SelectTablePane extends JPanel {
 		jtable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtable.setRowSelectionAllowed(true);
 		jtable.setColumnSelectionAllowed(false);
+		jtable.enableInputMethods(false);
 		jtable.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
 
@@ -72,9 +75,41 @@ public class SelectTablePane extends JPanel {
 					public void valueChanged(ListSelectionEvent e) {
 						if ((boolean) model.getValueAt(e.getFirstIndex(), 2) == true) {
 							updateStatus(e.getFirstIndex(), "Skip");
+							model.setValueAt(false, e.getFirstIndex(),
+									columnName.length - 2);
+							String name = (String) model.getValueAt(
+									e.getFirstIndex(), 0);
+							Container cont = getContainer(name);
+							if (cont != null) {
+								int size = cont.getFileList().size();
+								System.out.println(size);
+								int pos = e.getFirstIndex();
+								for (int i = 0; i < size; i++) {
+									pos++;
+									model.setValueAt(false, pos, 2);
+									updateStatus(pos, "Skip");
+								}
+							}
+
 						} else {
 							updateStatus(e.getFirstIndex(), "Ready");
+							model.setValueAt(true, e.getFirstIndex(),
+									columnName.length - 2);
+							String name = (String) model.getValueAt(
+									e.getFirstIndex(), 0);
+							Container cont = getContainer(name);
+							if (cont != null) {
+								int size = cont.getFileList().size();
+								System.out.println(size);
+								int pos = e.getFirstIndex();
+								for (int i = 0; i < size; i++) {
+									pos++;
+									model.setValueAt(true, pos, 2);
+									updateStatus(pos, "Ready");
+								}
+							}
 						}
+						model.fireTableDataChanged();
 					}
 				});
 		JScrollPane scrollPane = new JScrollPane();
@@ -82,17 +117,19 @@ public class SelectTablePane extends JPanel {
 		scrollPane.setViewportView(jtable);
 	}
 
-	public void setFileList(File[] fileList) {
-		this.fileList = fileList;
-		isUpload = new boolean[this.fileList.length];
+	public void setContainerList(List<Container> containerList) {
+		this.containterList = containerList;
 		clearList();
-		this.fileListName = new String[this.fileList.length];
-		for (int i = 0; i < fileList.length; i++) {
-			isUpload[i] = true;
-			fileListName[i] = fileList[i].getName();
-			model.addRow(new Object[] { fileList[i].getName(),
-					FileUtils.byteCountToDisplaySize(fileList[i].length()),
-					isUpload[i], "Ready" });
+		for (Container container : containterList) {
+			insertRow(new Object[] { container.getName(),
+					FileUtils.byteCountToDisplaySize(container.getByteUsed()),
+					true, "Ready" });
+			List<File> listFile = container.getFileList();
+			for (File file : listFile) {
+				insertRow(new Object[] { "   ▶" + file.getName(),
+						FileUtils.byteCountToDisplaySize(file.getBytes()),
+						true, "Ready" });
+			}
 		}
 		fillTable();
 	}
@@ -127,10 +164,6 @@ public class SelectTablePane extends JPanel {
 		model.fireTableDataChanged();
 	}
 
-	public File[] getFileList() {
-		return fileList;
-	}
-
 	public int getRowCount() {
 		return model.getRowCount();
 	}
@@ -141,5 +174,40 @@ public class SelectTablePane extends JPanel {
 
 	public String getFilename(int index) {
 		return (String) model.getValueAt(index, 0);
+	}
+
+	public Container getContainer(String name) {
+		for (Container container : containterList) {
+			if (container.getName().equals(name)) {
+				return container;
+			}
+		}
+		return null;
+	}
+
+	public Container getContainerOfFile(String fileName) {
+		for (Container container : containterList) {
+			List<File> fileList = container.getFileList();
+			for (File file : fileList) {
+				if (file.getName().equals(fileName)) {
+					return container;
+				}
+			}
+		}
+		return null;
+	}
+
+	public String[] getSelected() {
+		ArrayList<String> selected = new ArrayList<String>();
+		for (int i = 0; i < model.getRowCount(); i++) {
+			if (model.getValueAt(i, 0) == null) {
+				break;
+			}
+			boolean select = (boolean) model.getValueAt(i, 2);
+			if (select == true) {
+				selected.add((String) model.getValueAt(i, 0));
+			}
+		}
+		return selected.toArray(new String[selected.size()]);
 	}
 }

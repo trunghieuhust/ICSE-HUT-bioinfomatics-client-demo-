@@ -27,6 +27,8 @@ public class ObjectFactory {
     private final static QName _Authenticate_QNAME = new QName("http://service.bio.icse.hust/", "authenticate");
     private final static QName _AuthenticateResponse_QNAME = new QName("http://service.bio.icse.hust/", "authenticateResponse");
     private final static QName _CreateWorkflow_QNAME = new QName("http://service.bio.icse.hust/", "createWorkflow");
+    private final static QName _CreateWorkflowFromTemplate_QNAME = new QName("http://service.bio.icse.hust/", "createWorkflowFromTemplate");
+    private final static QName _CreateWorkflowFromTemplateResponse_QNAME = new QName("http://service.bio.icse.hust/", "createWorkflowFromTemplateResponse");
     private final static QName _CreateWorkflowResponse_QNAME = new QName("http://service.bio.icse.hust/", "createWorkflowResponse");
     private final static QName _DeleteContainer_QNAME = new QName("http://service.bio.icse.hust/", "deleteContainer");
     private final static QName _DeleteContainerResponse_QNAME = new QName("http://service.bio.icse.hust/", "deleteContainerResponse");
@@ -76,6 +78,22 @@ public class ObjectFactory {
      */
     public CreateWorkflow createCreateWorkflow() {
         return new CreateWorkflow();
+    }
+
+    /**
+     * Create an instance of {@link CreateWorkflowFromTemplate }
+     * 
+     */
+    public CreateWorkflowFromTemplate createCreateWorkflowFromTemplate() {
+        return new CreateWorkflowFromTemplate();
+    }
+
+    /**
+     * Create an instance of {@link CreateWorkflowFromTemplateResponse }
+     * 
+     */
+    public CreateWorkflowFromTemplateResponse createCreateWorkflowFromTemplateResponse() {
+        return new CreateWorkflowFromTemplateResponse();
     }
 
     /**
@@ -263,6 +281,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link File }
+     * 
+     */
+    public File createFile() {
+        return new File();
+    }
+
+    /**
+     * Create an instance of {@link Container }
+     * 
+     */
+    public Container createContainer() {
+        return new Container();
+    }
+
+    /**
      * Create an instance of {@link TaskResult }
      * 
      */
@@ -295,6 +329,24 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "createWorkflow")
     public JAXBElement<CreateWorkflow> createCreateWorkflow(CreateWorkflow value) {
         return new JAXBElement<CreateWorkflow>(_CreateWorkflow_QNAME, CreateWorkflow.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateWorkflowFromTemplate }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "createWorkflowFromTemplate")
+    public JAXBElement<CreateWorkflowFromTemplate> createCreateWorkflowFromTemplate(CreateWorkflowFromTemplate value) {
+        return new JAXBElement<CreateWorkflowFromTemplate>(_CreateWorkflowFromTemplate_QNAME, CreateWorkflowFromTemplate.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateWorkflowFromTemplateResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.bio.icse.hust/", name = "createWorkflowFromTemplateResponse")
+    public JAXBElement<CreateWorkflowFromTemplateResponse> createCreateWorkflowFromTemplateResponse(CreateWorkflowFromTemplateResponse value) {
+        return new JAXBElement<CreateWorkflowFromTemplateResponse>(_CreateWorkflowFromTemplateResponse_QNAME, CreateWorkflowFromTemplateResponse.class, null, value);
     }
 
     /**

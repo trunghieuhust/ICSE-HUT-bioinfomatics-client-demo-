@@ -26,8 +26,11 @@ public class MainPane extends JPanel {
 
 		WorkflowPane workflowPane = new WorkflowPane();
 		tabbedPane.addTab("Workflow", null, workflowPane, "Workflow");
-		
+
 		DataPane dataPane = new DataPane();
 		tabbedPane.addTab("Data", dataPane);
+
+		StatisticsPane statisticsPane = new StatisticsPane();
+		tabbedPane.addTab("Statistics", statisticsPane);
 	}
 }

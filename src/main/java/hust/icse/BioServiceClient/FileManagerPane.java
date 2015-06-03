@@ -1,13 +1,24 @@
 package hust.icse.BioServiceClient;
 
+import hust.icse.bio.service.Container;
+import hust.icse.bio.service.File;
+
+import java.awt.FlowLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SwingWorker;
+
+import org.apache.commons.io.FileUtils;
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -22,7 +33,9 @@ public class FileManagerPane extends JPanel {
 	private JButton refresh;
 	private JButton delete;
 	private JButton getLink;
-	private SelectTablePane selectTable;
+	private FileTablePane fileTable;
+	private JEditorPane resultPane;
+	private List<Container> listContainer;
 
 	// ▶▶▶▶▶▶▶
 	public FileManagerPane() {
@@ -39,6 +52,8 @@ public class FileManagerPane extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow"),
 				FormSpecs.RELATED_GAP_ROWSPEC }));
 	}
 
@@ -56,8 +71,8 @@ public class FileManagerPane extends JPanel {
 				refreshTask.execute();
 			}
 		});
-		selectTable = new SelectTablePane();
-		add(selectTable, "2, 6, 3, 1, fill, fill");
+		fileTable = new FileTablePane();
+		add(fileTable, "2, 6, 3, 1, fill, fill");
 		delete = new JButton("Delete");
 		delete.addActionListener(new ActionListener() {
 
@@ -67,8 +82,8 @@ public class FileManagerPane extends JPanel {
 				deleteTask.execute();
 			}
 		});
-		add(delete, "2, 8, left, default");
 		getLink = new JButton("Get Link");
+		// add(delete, "2, 8, left, default");
 		getLink.addActionListener(new ActionListener() {
 
 			@Override
@@ -77,6 +92,23 @@ public class FileManagerPane extends JPanel {
 				linkTask.execute();
 			}
 		});
+		// add(getLink, "3,8");
+		JPanel buttonPane = new JPanel();
+		buttonPane.add(delete);
+		buttonPane.add(getLink);
+		add(buttonPane, "2, 8, left, default");
+
+		JLabel resultLabel = DefaultComponentFactory.getInstance().createLabel(
+				"Result");
+		add(resultLabel, "2,10,left, default");
+		resultPane = new JEditorPane();
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane, "2, 12, 3, 1, fill, fill");
+		scrollPane.setToolTipText("Return data");
+		scrollPane.setViewportView(resultPane);
+		resultPane.setToolTipText("Result received from server");
+		resultLabel.setLabelFor(resultPane);
+		resultPane.setEditable(false);
 	}
 
 	private class RefreshTask extends SwingWorker<Void, Void> {
@@ -86,25 +118,14 @@ public class FileManagerPane extends JPanel {
 			refresh.setEnabled(false);
 			delete.setEnabled(false);
 
-			List<String> listContainer = Main.getBio().getAllContainer(
-					Main.getUsername(), Main.getPassword());
-			selectTable.clearList();
-			for (String container : listContainer) {
-				selectTable.insertRow(new Object[] { container, 0, true,
-						"Ready" });
-				List<String> listFile = Main.getBio().getAllFileInContainer(
-						Main.getUsername(), Main.getPassword(), container);
-				for (String file : listFile) {
-					selectTable.insertRow(new Object[] { "   ▶" + file, 0,
-							true, "Ready" });
-				}
-			}
+			listContainer = Main.getBio().getAllContainer(Main.getUsername(),
+					Main.getPassword());
+			fileTable.setContainerList(listContainer);
 			return null;
 		}
 
 		@Override
 		protected void done() {
-			selectTable.fillTable();
 			refresh.setEnabled(true);
 			delete.setEnabled(true);
 		}
@@ -116,32 +137,39 @@ public class FileManagerPane extends JPanel {
 		protected Void doInBackground() throws Exception {
 			refresh.setEnabled(false);
 			delete.setEnabled(false);
-
-			int rowCount = selectTable.getRowCount();
-			String currentContainer = null;
-			for (int i = 0; i < rowCount; i++) {
-				String name = selectTable.getFilename(i);
-				if (name.contains("▶")) {
-					if (selectTable.isSelect(i)) {
-						String filename = name.trim().replace("▶", "");
-						Main.getBio().deleteFile(Main.getUsername(),
-								Main.getPassword(), currentContainer, filename);
-					}
+			resultPane.setText("");
+			String[] selected = fileTable.getSelected();
+			StringBuilder resultText = new StringBuilder();
+			for (int i = 0; i < selected.length; i++) {
+				Container cont = getContainer(selected[i]);
+				if (cont != null) {
+					boolean result = Main.getBio()
+							.deleteContainer(Main.getUsername(),
+									Main.getPassword(), selected[i]);
+					resultText.append("Delete container '" + selected[i]
+							+ "': " + result);
+					i = i + cont.getFileList().size();
 				} else {
-					currentContainer = name;
-					if (selectTable.isSelect(i)) {
-						Main.getBio().deleteContainer(Main.getUsername(),
-								Main.getPassword(), name);
-					}
+					String filename = selected[i].replace("▶", "");
+					boolean result = Main.getBio().deleteFile(
+							Main.getUsername(), Main.getPassword(),
+							getContainerOfFile(filename).getName(), filename);
+					resultText.append("Delete file '" + filename + "': "
+							+ result);
 				}
+				resultPane.setText(resultText.toString());
 			}
-			refresh.setEnabled(true);
 			delete.setEnabled(true);
 			return null;
 		}
 
 		@Override
 		protected void done() {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			RefreshTask refreshTask = new RefreshTask();
 			refreshTask.execute();
 		}
@@ -151,32 +179,70 @@ public class FileManagerPane extends JPanel {
 
 		@Override
 		protected Void doInBackground() throws Exception {
-			refresh.setEnabled(false);
-			delete.setEnabled(false);
-			selectTable.setEnabled(false);
-			int rowCount = selectTable.getRowCount();
-			String currentContainer = null;
-			int currentContainerIndex = -1;
-			for (int i = 0; i < rowCount; i++) {
-				String name = selectTable.getFilename(i);
-				if (name.contains("▶")) {
-					if (selectTable.isSelect(i)) {
-						String filename = name.trim().replace("▶", "");
-						if (!selectTable.isSelect(currentContainerIndex)) {
-							Main.getBio().deleteFile(Main.getUsername(),
-									Main.getPassword(), currentContainer, filename);
-
-						}
+			getLink.setEnabled(false);
+			String[] selected = fileTable.getSelected();
+			resultPane.setText("");
+			StringBuilder resultText = new StringBuilder();
+			for (int i = 0; i < selected.length; i++) {
+				Container cont = getContainer(selected[i]);
+				if (cont != null) {
+					List<File> fileList = cont.getFileList();
+					resultText.append("\nContainer: " + selected[i]);
+					for (File file : fileList) {
+						resultText.append("\n   ▶ " + file.getName() + ": "
+								+ "\n     " + file.getFileURL());
 					}
+					i = i + cont.getFileList().size();
 				} else {
-					currentContainer = name;
-					currentContainerIndex = i;
-					if (selectTable.isSelect(i)) {
-//						Strin
-					}
+					Container container = null;
+					String fileName = selected[i].replace("▶", "").trim();
+					container = getContainerOfFile(fileName);
+					resultText.append("\nContainer: " + container.getName()
+							+ ": ");
+					resultText
+							.append("\n   ▶ " + getFile(fileName).getName()
+									+ ": " + "\n     "
+									+ getFile(fileName).getFileURL());
 				}
 			}
+			resultPane.setText(resultText.toString());
+			getLink.setEnabled(true);
 			return null;
 		}
+	}
+
+	private Container getContainer(String name) {
+		for (Container container : listContainer) {
+			if (container.getName().equals(name)) {
+				return container;
+			}
+		}
+		return null;
+	}
+
+	public Container getContainerOfFile(String fileName) {
+		for (Container container : listContainer) {
+			List<File> fileList = container.getFileList();
+			for (File file : fileList) {
+				if (file.getName().equals(fileName)) {
+					System.out.println("found " + container.getName());
+					return container;
+				}
+			}
+		}
+		System.out.println("not found" + fileName);
+		return null;
+	}
+
+	public File getFile(String fileName) {
+		for (Container container : listContainer) {
+			List<File> fileList = container.getFileList();
+			for (File file : fileList) {
+				if (file.getName().equals(fileName)) {
+					return file;
+				}
+			}
+		}
+		return null;
 	}
 }
